@@ -11,7 +11,7 @@ sensor = Pin(15, Pin.IN, Pin.PULL_UP)
 
 # ============== Settings ==============
 # Recalculate every period
-maxLoopPeriod = 200
+maxLoopPeriod = 400
 
 # Reduce speed by 75%
 overclockRatio = 0.75
@@ -25,12 +25,13 @@ debugMode = True
 # Higher is faster
 pulseValues = [0,1,2,4,5] # ,8] # ,10] # , 20]
 
-# With a max loop period of 200
 # 5 = 12.5mph
 # 4 = 10mph
 # 2 = 5mph
 # 1 = 2.5mph
 # 0 = 0mph
+
+pulseExtendBy = 5 # Loops
 
 # ============== Variables =============
 overclock = 0
@@ -39,6 +40,7 @@ sensorCount = 0
 lastStateOn = False
 pulseFrequency = 0
 
+pulseExtendCount = 0 # How many loops has the electromagnet been extended
 # ======================================
 
 def debug(output, newline = False):
@@ -59,7 +61,8 @@ def smoothedPulse(input):
 debug("Start up complete", True)
 
 while True:
-    time.sleep(0.01)
+    # time.sleep(0.01)
+    time.sleep(0.005)
     
     sensorOn = sensor.value() == False
     
@@ -101,10 +104,23 @@ while True:
         debug('/')
     
     # Emit pulse
+    emitPulse = False
+    
     if pulseFrequency > 0 and loop % pulseFrequency == 0:
+        emitPulse = True
+    elif pulseExtendCount > 0:
+        emitPulse = True
+
+   
+    if emitPulse:
         debug('#')
         led.high()
         relay.high()
+        pulseExtendCount += 1
+        
+        # Reset - if extension of pulse reached
+        if pulseExtendCount >= pulseExtendBy:
+            pulseExtendCount = 0
     else:
         debug('_')
         led.low()
