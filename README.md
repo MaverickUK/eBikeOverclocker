@@ -9,7 +9,7 @@ My eBike is a [Decathlon 27.5+ INCH ELECTRIC MOUNTAIN BIKE E-ST 900](https://www
 
 ![eBike overclocker proof of concept](https://img.youtube.com/vi/J6ejlkNBZDI/0.jpg)
 
-[View proof of concept video on YouTube](https://youtu.be/J6ejlkNBZDI)
+[Watch proof of concept video on YouTube](https://youtu.be/J6ejlkNBZDI)
 
 
 ## Parts list
